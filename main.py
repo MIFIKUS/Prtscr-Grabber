@@ -11,9 +11,11 @@ from selenium import webdriver
 
 time = 0.3
 
-DRIVER = 'D:\\Desktop\\bin\\phantomjs.exe'
+DRIVER = 'phantomjs.exe'
 driver = webdriver.PhantomJS(DRIVER)
 
+
+storage = input("Куда вы хотите сохранить скриншоты? ")
 
 
 # для того что бы не было вылетов при поиске ссылок
@@ -79,12 +81,11 @@ def link_brute(url, dictionary):
                                             if "https://image.prntscr.com/image/" in images['src']:
                                                 print("№ " + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
                                                 driver.get(images['src'])
-                                                screenshot = driver.save_screenshot("D:\Projects\\" + str(num) + ".png")
-#                                               driver.quit()
+                                                screenshot = driver.save_screenshot(storage + str(num) + ".png")
                                                 __import__('time').sleep(time)
                                             else:
                                                 print("№ " + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
-                                                urlretrieve(images['src'], 'D:\Projects\\' + str(num) + '.png')
+                                                urlretrieve(images['src'], storage + str(num) + '.png')
                                                 num += 1
                                                 __import__('time').sleep(time)
 
@@ -94,6 +95,5 @@ def link_brute(url, dictionary):
                                 pass
 
 
-# subprocess.call(cmd, shell=True)
-# subprocess.call('wget https://techlist.top/wp-content/uploads/2017/05/wget.jpg --no-check-certificate')
+
 link_brute(base_url, DICT)
