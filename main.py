@@ -1,23 +1,30 @@
 import requests
+import os
 from urllib.request import urlretrieve
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
+import time
+
 
 # Увеличить скорость работы
 # добавить список неработающих ссылок и сделать чтобы после except скрипт не начинался заново
 
 
 
-
+default = r'C:\\PrtscrGrabber\\'
 time = 0.3
 
 DRIVER = 'phantomjs.exe'
 driver = webdriver.PhantomJS(DRIVER)
 
 
+
 storage = input("Куда вы хотите сохранить скриншоты? ")
-
-
+if storage == r"default":
+    storage = default
+    if not os.path.exists(default):
+        os.makedirs(default)
+        
 # для того что бы не было вылетов при поиске ссылок
 base_url = 'https://prnt.sc/'
 base_headers = {'accept': '*/*',
@@ -79,12 +86,12 @@ def link_brute(url, dictionary):
                                             continue
                                         else:
                                             if "https://image.prntscr.com/image/" in images['src']:
-                                                print("№ " + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
+                                                print("№" + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
                                                 driver.get(images['src'])
                                                 screenshot = driver.save_screenshot(storage + str(num) + ".png")
                                                 __import__('time').sleep(time)
                                             else:
-                                                print("№ " + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
+                                                print("№" + str(num) + " URL: " + ready_url + "           " + "Image URL: " + images['src'])
                                                 urlretrieve(images['src'], storage + str(num) + '.png')
                                                 num += 1
                                                 __import__('time').sleep(time)
@@ -97,3 +104,4 @@ def link_brute(url, dictionary):
 
 
 link_brute(base_url, DICT)
+
