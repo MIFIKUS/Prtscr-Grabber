@@ -8,6 +8,7 @@ pip install requests
 
 Когда вы выбираете куда сохранить скриншоты а конце указанного пути ставте \ 
 D:\Projects не правильно           D:\Projects\ правильно
+Так же если написать вместо пути default то будет выбран путь C:\PrtscrGrabber\
 
 ENG
 Leave PhantomJS in the program folder
